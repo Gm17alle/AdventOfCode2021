@@ -14,4 +14,8 @@ object Utils {
       }).toList
     }.get
   }
+
+  def readFileToArrayString(filename: String): List[String] = {
+    Using(Source.fromFile(filename)) {source => source.getLines().toList}.get
+  }
 }
