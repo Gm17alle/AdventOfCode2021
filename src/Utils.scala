@@ -16,6 +16,22 @@ object Utils {
   }
 
   def readFileToArrayString(filename: String): List[String] = {
-    Using(Source.fromFile(filename)) {source => source.getLines().toList}.get
+    Using(Source.fromFile(filename)) { source => source.getLines().toList }.get
   }
+
+  def readBingoBoards(filename: String): (List[Int], List[Array[Array[Int]]]) = {
+    Using(Source.fromFile(filename)) { source =>
+      val lines = source.getLines()
+      val calledNums = lines.next().split(",").map(_.toInt).toList
+
+      val bingoBoards = lines.toList.filter(_.trim != "").flatMap(_.split(" ").filter(_.trim != "").map(_.toInt)).toArray.grouped(5).toArray.grouped(5).toList
+
+      (calledNums, bingoBoards)
+    }.get
+  }
+
+  def readInto2dArrays(rows: List[String]): List[Array[Array[Int]]] = {
+    rows.filter(_.trim != "").flatMap(_.split(" ").filter(_.trim != "").map(_.toInt)).toArray.grouped(5).toArray.grouped(5).toList
+  }
+
 }
