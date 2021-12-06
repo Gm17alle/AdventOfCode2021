@@ -1,6 +1,5 @@
 
-import Math.max
-import Math.min
+import Math.{abs, max, min}
 import scala.io.Source
 import scala.util.Using
 
@@ -15,7 +14,7 @@ object Day_5 {
 
     horzLines.foreach(p =>
       grid(p._1._1)
-        .slice(min(p._1._2, p._2._2), max(p._1._2, p._2._2)+1)
+        .slice(min(p._1._2, p._2._2), max(p._1._2, p._2._2) + 1)
         .map(_ + 1)
         .copyToArray(grid(p._1._1), min(p._1._2, p._2._2))
     )
@@ -24,12 +23,27 @@ object Day_5 {
     val temp = tiltedGrid.flatten.toList.count(_ > 0)
     vertLines.foreach(p =>
       tiltedGrid(p._1._2)
-        .slice(min(p._1._1, p._2._1), max(p._1._1, p._2._1)+1)
+        .slice(min(p._1._1, p._2._1), max(p._1._1, p._2._1) + 1)
         .map(_ + 1)
         .copyToArray(tiltedGrid(p._1._2), min(p._1._1, p._2._1))
     )
 
-    tiltedGrid.flatten.toList.count(_ > 1)
+    //problem 1 value
+//    tiltedGrid.flatten.toList.count(_ > 1)
+
+    val realGridShady = tiltedGrid.transpose
+
+    val diagonals = pairs.filterNot(p => p._1._1 == p._2._1).filterNot(p => p._1._2 == p._2._2)
+    diagonals.foreach(p => {
+      val x_direction = p._2._1 compare p._1._1
+      val y_direction = p._2._2 compare p._1._2
+      val pointsToUpdate = (for(i <- 0 to abs(p._1._1 - p._2._1)) yield (p._1._1 + x_direction * i, p._1._2 + y_direction * i)).toList
+      pointsToUpdate.foreach(p => {
+        realGridShady(p._1)(p._2) += 1
+      })
+    })
+
+    realGridShady.flatten.toList.count(_ > 1)
   }
 
 
