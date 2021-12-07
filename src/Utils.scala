@@ -34,4 +34,8 @@ object Utils {
     rows.filter(_.trim != "").flatMap(_.split(" ").filter(_.trim != "").map(_.toInt)).toArray.grouped(5).toArray.grouped(5).toList
   }
 
+  def readCommaSeperatedIntsToList(filename: String): List[Int] = {
+    Using(Source.fromFile(filename)) { _.getLines().next().split(",").map(_.toInt).toList}
+  }.get
+
 }
