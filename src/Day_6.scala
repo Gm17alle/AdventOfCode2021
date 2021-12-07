@@ -37,8 +37,6 @@ object Day_6 {
     slidingSlice.copyToArray(fishArray)
     fishArray(6) += new6and8;
     fishArray(8) = new6and8
-    new6and8
-    ()
   }
 
   def main(args: Array[String]): Unit = { // > 45122333680048
