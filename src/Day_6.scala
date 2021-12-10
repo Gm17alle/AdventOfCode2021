@@ -41,6 +41,5 @@ object Day_6 {
 
   def main(args: Array[String]): Unit = { // > 45122333680048
     print(problem2(readCommaSeperatedIntsToList("src/resources/lanternfish.txt")))
-//    print(problem2((1 to 5).toList))
   }
 }
