@@ -1,6 +1,8 @@
 import scala.io.Source
 import scala.util.Using
 
+case class letterNumbers(numberDef: List[String], output: List[String])
+
 object Utils {
 
   def readFileToArrayInts(filename: String): List[Int] = {
@@ -37,5 +39,12 @@ object Utils {
   def readCommaSeperatedIntsToList(filename: String): List[Int] = {
     Using(Source.fromFile(filename)) { _.getLines().next().split(",").map(_.toInt).toList}
   }.get
+
+  def readWeirdLetters(filename: String): List[letterNumbers] = {
+    Using(Source.fromFile(filename)) {_.getLines().toList.map(s =>
+      letterNumbers(s.split(" \\| ")(0).split(" ").map(_.trim.sorted).toList, s.split(" \\| ")(1).split(" ").map(_.trim.sorted).toList))
+
+    }.get
+  }
 
 }
