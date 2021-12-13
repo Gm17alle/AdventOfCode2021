@@ -37,14 +37,23 @@ object Utils {
   }
 
   def readCommaSeperatedIntsToList(filename: String): List[Int] = {
-    Using(Source.fromFile(filename)) { _.getLines().next().split(",").map(_.toInt).toList}
+    Using(Source.fromFile(filename)) {
+      _.getLines().next().split(",").map(_.toInt).toList
+    }
   }.get
 
   def readWeirdLetters(filename: String): List[letterNumbers] = {
-    Using(Source.fromFile(filename)) {_.getLines().toList.map(s =>
-      letterNumbers(s.split(" \\| ")(0).split(" ").map(_.trim.sorted).toList, s.split(" \\| ")(1).split(" ").map(_.trim.sorted).toList))
+    Using(Source.fromFile(filename)) {
+      _.getLines().toList.map(s =>
+        letterNumbers(s.split(" \\| ")(0).split(" ").map(_.trim.sorted).toList, s.split(" \\| ")(1).split(" ").map(_.trim.sorted).toList))
 
     }.get
   }
+
+  def readDigits(filename: String): List[List[Int]] = {
+    Using(Source.fromFile(filename)) {
+      _.getLines().map(_.map(_.toInt - '0').toList).toList
+    }
+  }.get
 
 }
